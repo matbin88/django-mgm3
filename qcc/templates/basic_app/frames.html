@@ -1,0 +1,71 @@
+{% extends "basic_app/base.html" %} {% block body_block %}
+<div class="container mt-4" style="min-height: 500px;">
+    <div class="row">
+        <div class="col-12 mx-auto">
+            <nav aria-label="breadcrumb" style="font-size: 14px;">
+                <ol class="breadcrumb bg-white">
+                    <li class="breadcrumb-item"><a href="{% url 'basic_app:home' %}">Home</a></li>
+                    <li class="breadcrumb-item" aria-current="page">
+                        {% for s in subject %}
+                        <a href="{% url 'basic_app:subject_detail' pk=s.id %}">
+                         {{ s.subject_name }} 
+                        </a> {% endfor %}
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        {% for t in topic %} {{ t.topic_name }} {% endfor %}
+                    </li>
+                </ol>
+            </nav>
+            <div class="">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    {% for frame in frames_list %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if forloop.first %}active{% endif %}" id="{{ frame.id }}-tab" data-toggle="tab" href="#f{{ frame.id }}" role="tab" aria-controls="{{ frame.id }}" aria-selected="true">{{ forloop.counter }}</a>
+                    </li>
+                    {% endfor %}
+                    <li class="nav-item">
+                        <a class="nav-link" id="test-tab" data-toggle="tab" href="#test_frame" role="tab" aria-controls="{{ frame.id }}" aria-selected="true">Test</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    {% for frame in frames_list %}
+                    <div class="tab-pane {% if forloop.first %}active{% endif %} fade show p-2" id="f{{ frame.id }}" role="tabpanel" aria-labelledby="{{ frame.id }}-tab">
+
+                        <div class="container">
+                            <div class="row pt-4 pb-4">
+                                <div class="col-md-5">
+                                    <h5 style="font-weight: bold;">{{ frame }}</h5>
+                                    <img src="{{ frame.img_url }}" alt="{{ frame.frame_name }}" style=' width: 100%; object-fit: contain; vertical-align: top;'>
+                                </div>
+                                <div class="col-md-7">
+                                    {{ frame.frame_description | safe }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="tab-pane fade show p-2" id="test_frame" role="tabpanel" aria-labelledby="test-tab">
+                        <div class="container">
+                            <div class="row pb-4">
+                                <div class="col-12 text-center">
+                                    {% if user_test %} {% for s in subject %} {% for t in topic %}
+                                    <p style="font-family: acme; font-size: 20px; font-weight: lighter; margin-top: 30px;">You Have Already Taken the Test !</p>
+                                    <a href="{% url 'basic_app:test' sid=s.id tid=t.id %}" class="btn btn-success mt-2">VIEW TEST RESULT</a> {% endfor %} {% endfor %} {%elif test%}
+                                    <img src="https://www.larimer.org/sites/default/files/styles/media_responsive_widest/public/uploads/2018/new_well_done_inside_info_graphic.png?itok=u0XrlyX-" alt="{{ frame.frame_name }}" style=' width: 60%; height: 60%; object-fit: contain;'>
+                                    <p style="font-family: acme; font-size: 20px; font-weight: lighter;">
+                                        Congratulations on completing the Topic. Please Take a Test to check Your Memory.
+                                    </p>
+                                    {% for s in subject %} {% for t in topic %}
+                                    <a href="{% url 'basic_app:test' sid=s.id tid=t.id %}" class="btn btn-success mt-2">TAKE TEST</a> {% endfor %} {% endfor %} {% else %}
+                                    <p class="text-center" style="font-family: acme; font-size: 20px; font-weight: lighter;">No Active Tests for this Topic Now. Please Check Back Later !</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

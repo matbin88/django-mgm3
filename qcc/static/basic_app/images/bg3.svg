@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="487px" height="653px" viewBox="0 0 487 653" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>pricing_page_2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="45.6794576%" y1="97.6968092%" x2="30.8754392%" y2="7.53093236%" id="linearGradient-1">
+            <stop stop-color="#FF6870" offset="0%"/>
+            <stop stop-color="#E3262F" offset="100%"/>
+        </linearGradient>
+    </defs>
+    <g id="color_trials" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.200000003">
+        <g id="pricing_page_2" transform="translate(-0.400000, 0.000000)" fill="url(#linearGradient-1)" fill-rule="nonzero">
+            <g id="Desktop">
+                <path d="M255.669187,7.98807215 C397.552345,35.926356 412.355626,87.9987909 486.653125,88.4978908 L486.661176,595.147208 C387.798537,661.156287 292.807195,689.007385 168.07461,577.842941 C29.0458276,453.93741 -8.01875265,208.103632 1.95329063,144.019113 C11.9253339,79.9345927 62.4726476,-30.0543556 255.669187,7.98807215 Z" id="pricing_page_2"/>
+            </g>
+        </g>
+    </g>
+</svg>

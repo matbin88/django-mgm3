@@ -1,0 +1,30 @@
+{% extends "basic_app/base.html" %} {% block body_block %}
+<div class="container vh-100">
+    <div class="row vh-100">
+        <div class="col-md-6 align-self-center mx-auto">
+            <div class="shadow p-4 bg-white rounded">
+                <h3 style="text-align: center;">Login</h3>
+                {% if loginError %}
+                <div class="alert alert-danger text-center mb-2" role="alert">
+                    {{ loginError }}
+                </div>
+                {% endif %}
+                <form action="{% url 'basic_app:user_login' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_username">Username</label>
+                        <input type="text" class="form-control" name="username" maxlength="150" required id="username" aria-describedby="usernameHelp" placeholder="Enter Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password">Password</label>
+                        <input type="password" class="form-control" name="password" maxlength="150" required id="password" aria-describedby="usernameHelp" placeholder="Enter Password">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Login" class="btn btn-primary btn-block mt-4">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "basic_app/base.html" %} {% block body_block %}
+
+<div class="container vh-100">
+    <div class="row vh-100" style="color: aliceblue;">
+        <div class="col-md-6 align-self-center">
+            {% load static %}
+            <img src="{% static 'basic_app/images/ol3.jpeg' %}" alt="Online Learning" width="100%" class="shadow-lg">
+        </div>
+        <div class="col-md-6 align-self-center">
+            <h1 class="mb-3 text-center" style="font-family: fo;">Comprehensive learning programs for school students aged 4-18 years</h1>
+            <h5 class="mb-4 text-center" style="font-family: lobster;">Become lifelong learners with India's best teachers, engaging videos lessons and personalised learning journeys</h5>
+            <p class=" text-center"><a class="btn btn-light" href="{% url 'basic_app:register' %}" style="font-family: verdana;">JOIN NOW</a></p>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

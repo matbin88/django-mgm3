@@ -1,0 +1,95 @@
+{% extends "basic_app/base.html" %} {% block body_block %}
+
+<div class="container mt-4" style="min-height: 500px;">
+    <div class="row">
+        <div class="col-12 mx-auto">
+            <nav aria-label="breadcrumb" style="font-size: 14px;">
+                <ol class="breadcrumb bg-white">
+                    <li class="breadcrumb-item"><a href="{% url 'basic_app:home' %}">Home</a></li>
+                    {% for s in subject %}
+                    <li class="breadcrumb-item" aria-current="page">
+                        <a href="{% url 'basic_app:subject_detail' pk=s.id %}">
+                            {{ s.subject_name }} 
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page">
+                        {% for t in topic %}
+                        <a href="{% url 'basic_app:frame' sid=s.id tid=t.id %}">
+                             {{ t.topic_name }} 
+                        </a> {% endfor %}
+                    </li>
+                    {% endfor %}
+                    <li class="breadcrumb-item active" aria-current="page">Test</li>
+                </ol>
+            </nav>
+            <div class="col-10 p-4 mx-auto shadow mb-4">
+                {% if test_not_found %}
+                <p class="text-center" style="font-family: acme; font-size: 20px; font-weight: lighter;">No Active Tests for this Topic Now. Please Check Back Later !</p>
+                {%elif test_taken %}
+                <p class="text-center mb-4"><strong>Multiple Choice Questions</strong></p>
+
+                <ol>
+                    {% for qns in answer_paper %}
+                    <li> {{ qns.question }}
+                        <ul style="list-style: none;" class="mt-3 mb-3">
+                            {% for opt in option_list %} {% if opt.question.id == qns.question.id and opt.answer == True %}
+
+                            <li>
+                                Correct Answer : {{ opt.option }}
+                            </li>
+                            <li>
+                                Your Answer :
+                                <font color="{% if opt.option == qns.user_answer.option %}green{%else%}red{%endif%}">{{ qns.user_answer }}</font>
+                            </li> {% endif %} {% endfor %}
+                        </ul>
+                    </li> {% endfor %}
+                </ol>
+
+                {% else %} {% for s in subject %}{% for t in topic %}
+                <form action="{% url 'basic_app:test' sid=s.id tid=t.id %}" method="POST">{% endfor %}{% endfor %} {% csrf_token %}
+                    <p class="text-center mb-4"><strong>Multiple Choice Questions</strong></p>
+                    <ol id="qns">
+
+                        {% for qns in question_list %}
+                        <li> {{ qns.question }}
+                            <ul style="list-style: none;" class="mt-3 mb-3">
+                                {% for opt in option_list %} {% if opt.question.id == qns.id %}
+                                <li>
+                                    <label>
+                                        <input type="radio" name="{{forloop.parentloop.counter}}-opt" id="{{forloop.parentloop.counter}}-opt" onclick="setAnswer({{ forloop.parentloop.counter }},{{opt.id}})"> {{ opt.option }}
+                                    </label>
+                                </li> {% endif %} {% endfor %}
+                            </ul>
+                            <input type="hidden" name="qn{{forloop.counter}}" id="qn{{forloop.counter}}" value="{{qns.id}}">
+                            <input type="hidden" name="qn{{forloop.counter}}Ans" id="qn{{forloop.counter}}Ans" value="">
+                        </li> {% endfor %}
+
+                    </ol>
+                    <p class="text-center"><input type="hidden" name="numberOfQns" id="numberOfQns" value="{{question_list.count}}"><input type="button" name="submit_answer" class="btn btn-primary" value="SUBMIT ANSWERS" onclick="validate(this.form);"></p>
+
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function setAnswer(slno, optionId) {
+        $("#qn" + slno + "Ans").val(optionId);
+    }
+
+    function validate(frm) {
+        var count = $("#numberOfQns").val();
+        for (let index = 1; index <= count; index++) {
+            var element = $("#qn" + index + "Ans").val();
+            if (element.trim() == "") {
+                alert("Please Choose an Answer for Question Number " + index);
+                return;
+            }
+        }
+        frm.submit();
+    }
+</script>
+
+{% endblock %}

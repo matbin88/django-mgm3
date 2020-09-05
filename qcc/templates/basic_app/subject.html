@@ -1,0 +1,36 @@
+{% extends "basic_app/base.html" %} {% block body_block %}
+
+<style>
+    .btn-primary {
+        background-image: linear-gradient(-90deg, #01B3E0, #0A73D1);
+    }
+</style>
+<div class="container mt-4 vh-100">
+    <div class="row">
+        <div class="col-12 mx-auto">
+            <nav aria-label="breadcrumb" style="font-size: 14px;">
+                <ol class="breadcrumb bg-white">
+                    <li class="breadcrumb-item"><a href="{% url 'basic_app:home' %}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        {% for s in subject %} {{ s.subject_name }} {% endfor %}</li>
+                </ol>
+            </nav>
+            <div class="">
+                {% for topic in topics_list %}
+                <div class="card shadow text-center m-2" style="width: 12rem; float: left;">
+                    <img class="card-img-top" src="{{ topic.img_url }}" alt="{{ topic.topic_name }}" height="150px">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ topic.topic_name }} </h6>
+                        <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                        {% for s in subject %}
+                        <a href="{% url 'basic_app:frame' sid=s.id tid=topic.id %}" class="btn btn-primary">VIEW FRAMES</a> {% endfor %}
+
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

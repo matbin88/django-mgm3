@@ -1,0 +1,28 @@
+{% extends "basic_app/base.html" %} {% block body_block %}
+
+<style>
+    .btn-primary {
+        background-image: linear-gradient(-90deg, #01B3E0, #0A73D1);
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12 mx-auto">
+            <div class="">
+                {% for subject in subject_list %}
+                <div class="card shadow text-center m-2" style="width: 12rem; float: left;">
+                    <img class="card-img-top" src="{{ subject.img_url }}" alt="{{ subject.subject_name }}" height="150px">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ subject.subject_name }} </h5>
+                        <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                        <a href="{% url 'basic_app:subject_detail' pk=subject.id %}" class="btn btn-primary">VIEW TOPICS</a>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

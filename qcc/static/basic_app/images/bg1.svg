@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="909px" height="797px" viewBox="0 0 909 797" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>home_1</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="39.7010575%" y1="86.6712235%" x2="36.2652215%" y2="46.8312387%" id="linearGradient-1">
+            <stop stop-color="#FF6870" offset="0%"/>
+            <stop stop-color="#E3262F" offset="100%"/>
+        </linearGradient>
+        <path d="M784.431021,221.469696 C566.387834,438.585285 526.209506,301.223264 440.000354,606.939493 C353.791202,912.655725 111.347626,774.851573 52.1550113,699.701954 C39.5218552,683.663181 21.1587292,658.259548 0,626.116398 L0,0 L908.164603,0 C901.581781,64.4513605 867.296902,138.956344 784.431021,221.469696 Z" id="path-2"/>
+    </defs>
+    <g id="color_trials" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="home_1">
+            <g id="Oval-Copy-5" transform="translate(0.000000, -0.000000)">
+                <mask id="mask-3" fill="white">
+                    <use xlink:href="#path-2"/>
+                </mask>
+                <use id="Mask" fill="url(#linearGradient-1)" fill-rule="nonzero" xlink:href="#path-2"/>
+                <circle stroke="#7B1E22" stroke-width="40" opacity="0.0700000003" mask="url(#mask-3)" cx="-24" cy="501" r="187"/>
+            </g>
+        </g>
+    </g>
+</svg>

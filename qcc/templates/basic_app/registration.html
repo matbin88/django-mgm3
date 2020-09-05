@@ -1,0 +1,72 @@
+{% extends 'basic_app/base.html' %} {% load static %} {% block body_block %}
+
+<div class="row">
+    <div class="col-md-6 mx-auto mt-5">
+        {% if registered %}
+        <p class="mt-4" style="text-align: center; color: aliceblue;">Registered Successfully. <a href="{% url 'basic_app:user_login' %}">Click Here</a> to Login</p>
+        {% else %}
+        <div class="mt-4 shadow p-5 mb-5 bg-white rounded">
+
+            <h3 style="text-align: center;">Registration</h3>
+            {% if user_form.errors or profile_form.errors %}
+            <div class="alert alert-danger mb-2" role="alert">
+                {% for field in user_form %} {% for error in field.errors %}
+                <strong>{{ error|escape }}</strong> {% endfor %} {% endfor %} {% for error in user_form.non_field_errors %}
+                <strong>{{ error|escape }}</strong> {% endfor %} {% for field in profile_form %} {% for error in field.errors %}
+                <strong>{{ error|escape }}</strong> {% endfor %} {% endfor %} {% for error in profile_form.non_field_errors %}
+                <strong>{{ error|escape }}</strong> {% endfor %}
+            </div>
+            {% endif %}
+            <form enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_username">Username</label>
+                    <input type="text" class="form-control" name="username" maxlength="150" required id="id_username" aria-describedby="usernameHelp" placeholder="Enter Username">
+                    <small id="usernameHelp" class="form-text text-muted">15 characters or fewer. Letters and digits only.</small>
+                </div>
+                <div class="form-group">
+                    {{ user_form.email.errors }}
+                    <label for="id_email">Email address</label>
+                    <input type="email" class="form-control" name="email" maxlength="254" required id="id_email" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    {{ user_form.password.errors }}
+                    <label for="id_password">Password</label>
+                    <input type="password" class="form-control" name="password" maxlength="128" required id="id_password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    {{ profile_form.admission_number.errors }}
+                    <label for="id_admission_number">Admission Number</label>
+                    <input class="form-control" type="text" name="admission_number" maxlength="10" required id="id_admission_number" placeholder="Admission Number">
+                </div>
+                <div class="form-group">
+                    {{ profile_form.address.errors }}
+                    <label for="id_address">Address</label>
+                    <input type="text" class="form-control" name="address" maxlength="256" required id="id_address" placeholder="Address">
+                </div>
+                <div class="form-group">
+                    {{ profile_form.contact.errors }}
+                    <label for="id_contact">Contact Number</label>
+                    <input type="text" class="form-control" name="contact" maxlength="10" required id="id_contact" placeholder="Contact Number">
+                </div>
+                <div class="form-group mb-0 mt-4">
+                    <input type="submit" value="Register" class="btn btn-block btn-primary">
+                </div>
+            </form>
+            <!-- <form enctype="multipart/form-data" method="POST">
+                <input type="hidden" name="csrfmiddlewaretoken" value="mUnjryXof5L7xn3Dlx34TGgs1TOH7DNS4evTtMH2fXjqGVIRPpwgUtKeUjhyOODk">
+                <p><label for="id_username">Username:</label> <input type="text" name="username" maxlength="150" required id="id_username"> <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span></p>
+                <p><label for="id_email">Email address:</label> <input type="email" name="email" maxlength="254" id="id_email"></p>
+                <p><label for="id_password">Password:</label> <input type="text" name="password" maxlength="128" required id="id_password"></p>
+                <p><label for="id_admission_number">Admission number:</label> <input type="text" name="admission_number" maxlength="10" required id="id_admission_number"></p>
+                <p><label for="id_address">Address:</label> <input type="text" name="address" maxlength="256" required id="id_address"></p>
+                <p><label for="id_contact">Contact:</label> <input type="text" name="contact" maxlength="10" required id="id_contact"></p>
+                <input type="submit" value="Register" class="btn btn-primary">
+            </form> -->
+
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
