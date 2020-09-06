@@ -15,6 +15,8 @@ import random
 class IndexView(View):
     def get(self,request):
         #context_dict = {'text':'hello world', 'num':55}
+        if request.user.is_active:
+            return redirect('/basic_app/home/',{'username':request.user.username})
         return render(request,'basic_app/index.html')
 
 class HomeView(View):
@@ -138,29 +140,35 @@ class TestView(View):
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
-    def get(self,request, sid, tid):
+    def get(self,request, sid, tid, testSaved=0):
         data = dict()
         topic = models.Topic.objects.filter(id=tid)
         subject = models.Subject.objects.filter(id=sid)
-        frames = models.Frame.objects.filter(topic=tid)
+        frames = models.Frame.objects.filter(topic=tid)        
+        test = models.Test.objects.filter(topic=tid)
         data['topic'] = topic
         data['subject'] = subject
-        test = models.Test.objects.filter(topic=tid)
+        data['test'] = test
+        data['testSaved'] = testSaved
         max_qns = 0
         for t in test: 
             max_qns = t.max_questions
                 
-        if test:
-            valid_question_id_list = models.Question.objects.filter(frame__in=frames.all()).values_list('id', flat=True)
-            random_question_id_list = random.sample(list(valid_question_id_list), min(len(valid_question_id_list),max_qns))
-            question_list = models.Question.objects.filter(id__in=random_question_id_list)
-            #question_list = models.Question.objects.filter(frame__in=frames.all())        
+        if test:                                
+            data['test_taken'] = models.TestResult.objects.filter(test=models.Test.objects.get(topic=tid)).filter(user=request.user.id).exists()
             
+            if data['test_taken']:
+                question_list = models.Question.objects.filter(frame__in=frames.all())
+            else:
+                valid_question_id_list = models.Question.objects.filter(frame__in=frames.all()).values_list('id', flat=True)
+                random_question_id_list = random.sample(list(valid_question_id_list), min(len(valid_question_id_list),max_qns))
+                question_list = models.Question.objects.filter(id__in=random_question_id_list)                
             data['question_list'] = question_list
+
             option_list = models.Option.objects.filter(question__in=question_list.all())
             data['option_list'] = option_list           
             answer_paper = models.TestResult.objects.filter(test=models.Test.objects.get(topic=tid)).filter(user=request.user.id)
-            data['test_taken'] = models.TestResult.objects.filter(test=models.Test.objects.get(topic=tid)).filter(user=request.user.id).exists()
+            
             data['answer_paper'] = answer_paper
         else:
             data["test_not_found"] = True
@@ -172,10 +180,10 @@ class TestView(View):
             for x in range(1,int(request.POST.get("numberOfQns"))+1):
                 testAnswers = models.TestResult()
                 testAnswers.user = get_object_or_404(User, id=request.user.id)
-                testAnswers.test = get_object_or_404(models.Test, id=1)
+                testAnswers.test = get_object_or_404(models.Test, id=request.POST.get("testId"))
                 testAnswers.question = get_object_or_404(models.Question, id=request.POST.get("qn"+str(x)))
                 testAnswers.user_answer = get_object_or_404(models.Option, id=request.POST.get("qn"+str(x)+"Ans"))
                 testAnswers.save()
-            return HttpResponse("Success")
-        return render(request,'basic_app/test.html',{})
+            #return HttpResponse("Success")
+            return redirect('basic_app:test',sid=sid,tid=tid, testSaved='1')
 

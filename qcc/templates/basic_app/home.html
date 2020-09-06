@@ -6,9 +6,13 @@
     }
 </style>
 
-<div class="container mt-4">
+<div class="container mt-4" style="font-family: roboto;">
     <div class="row">
         <div class="col-12 mx-auto">
+            {% load static %}
+            <div class="alert alert-light" role="alert" style="font-family: fo;">
+                Hi, <strong style="font-size: 20px;">{{ user.username | title }}</strong>
+            </div>
             <div class="">
                 {% for subject in subject_list %}
                 <div class="card shadow text-center m-2" style="width: 12rem; float: left;">

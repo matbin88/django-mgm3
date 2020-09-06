@@ -27,7 +27,14 @@
                 <p class="text-center" style="font-family: acme; font-size: 20px; font-weight: lighter;">No Active Tests for this Topic Now. Please Check Back Later !</p>
                 {%elif test_taken %}
                 <p class="text-center mb-4"><strong>Multiple Choice Questions</strong></p>
-
+                {% if testSaved %}
+                <div class="alert alert-success text-center" role="alert">
+                    <strong style="font-size: 18px;">Test Completed Successfully !</strong>
+                </div>
+                {%endif%}
+                <div class="alert alert-light" role="alert">
+                    <strong style="font-size: 18px;">Following is Your Test Result :</strong>
+                </div>
                 <ol>
                     {% for qns in answer_paper %}
                     <li> {{ qns.question }}
@@ -65,7 +72,8 @@
                         </li> {% endfor %}
 
                     </ol>
-                    <p class="text-center"><input type="hidden" name="numberOfQns" id="numberOfQns" value="{{question_list.count}}"><input type="button" name="submit_answer" class="btn btn-primary" value="SUBMIT ANSWERS" onclick="validate(this.form);"></p>
+                    <p class="text-center"><input type="hidden" name="testId" id="testId" value="{% for tst in test %}{{tst.id}}{% endfor %}"><input type="hidden" name="numberOfQns" id="numberOfQns" value="{{question_list.count}}"><input type="button" name="submit_answer" class="btn btn-primary"
+                            value="SUBMIT ANSWERS" onclick="validate(this.form);"></p>
 
                 </form>
                 {% endif %}

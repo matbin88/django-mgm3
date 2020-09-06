@@ -14,4 +14,5 @@ urlpatterns = [
     path('home/<int:pk>/', views.SubjectView.as_view(), name='subject_detail'),
     path('home/<int:sid>/<int:tid>', views.FrameView.as_view(), name='frame'),
     path('home/<int:sid>/<int:tid>/test', views.TestView.as_view(), name='test'),
+    path('home/<int:sid>/<int:tid>/test/<int:testSaved>', views.TestView.as_view(), name='test'),
 ]
